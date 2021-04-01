@@ -9,12 +9,19 @@ public class ObjetivoCaperucitaRoja extends GoalTest {
 
     @Override
     public boolean isGoalState (AgentState agentState) {
-    
-    	// TODO: Complete Method
-        if  (true) //( (posicionCaperucitaRoja = posicionCampoFlores) && (vidasCaperucitaRoja > 0))
-        	{
+    	// Se obtiene la posición de Caperucita Roja
+    	int[] posicionCaperucita= ((EstadoCaperucitaRoja)agentState).getposicionCaperucitaRoja();
+    	// Se obtiene la cantidad de vida de Caperucita Roja
+    	int cantVida= ((EstadoCaperucitaRoja)agentState).getvidasCaperucitaRoja();
+    	// Se obtiene el mapa 
+    	int[][] mapa= ((EstadoCaperucitaRoja)agentState).getmapa();
+    	// Si Caperucita Roja está ubicada en el campo de flores y tiene más de una vida en el mapa,
+    	// entonces Éxito.
+    	// 4 = celda que contiene flores
+    	if ((mapa[posicionCaperucita[0]][posicionCaperucita[1]] == 4) 
+    			&& cantVida > 0){ 
             return true;
-        	}
+        }
         return false;
 	}
 }
