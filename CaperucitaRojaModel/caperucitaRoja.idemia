@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idemia:AgentModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:idemia="utn.frsf.cidisi">
+  <Environment name="AmbienteCaperucitaRoja">
+    <EnvironmentState name="EstadoAmbiente">
+      <DataStructure name="posicionLoboFeroz" type="pair"/>
+      <DataStructure name="posicionArboles" type="Other"/>
+      <DataStructure name="mapa" type="matrix"/>
+      <DataStructure name="cantidadDulcesMapa"/>
+      <DataStructure name="posicionCampoFlores"/>
+      <DataStructure name="posicionCaperucitaRoja"/>
+      <DataStructure name="vidasCaperucitaRoja"/>
+    </EnvironmentState>
+  </Environment>
+  <Agent name="CaperucitaRoja">
+    <Strategy xsi:type="idemia:Search"/>
+    <Goal name="ObjetivoCaperucitaRoja" value=" (posicionCaperucitaRoja = posicionCampoFlores) &amp;&amp; (vidasCaperucitaRoja > 0)"/>
+    <AgentState name="EstadoCaperucitaRoja">
+      <DataStructure name="posicionCaperucitaRoja" type="pair"/>
+      <DataStructure name="posicionLoboFeroz" type="pair"/>
+      <DataStructure name="posicionDulces" type="Other"/>
+      <DataStructure name="posicionCampoFlores" type="Other"/>
+      <DataStructure name="posicionArboles" type="Other"/>
+      <DataStructure name="mapa" type="matrix"/>
+      <DataStructure name="vidasCaperucitaRoja"/>
+      <DataStructure name="cantidadDulcesObtenidos"/>
+    </AgentState>
+  </Agent>
+  <Actions execute_by="//@Agent" executed_on="//@Environment" name="IrAlNorte" preConditions="!HayÁrbol(i-1,j) &amp;&amp; !estaLoboFeroz(i-1,j) &amp;&amp; !hayDulces()" postConditions="PosiciónCaperucitaRoja(arbolImpactado.i+1, j);"/>
+  <Actions execute_by="//@Agent" executed_on="//@Environment" name="IrAlSur" preConditions="!HayÁrbol(i+1,j) &amp;&amp; !estaLoboFeroz(i+1,j) &amp;&amp; !hayDulces()" postConditions="PosiciónCaperucitaRoja(arbolImpactado.i-1, j)"/>
+  <Actions execute_by="//@Agent" executed_on="//@Environment" name="IrAlOeste" preConditions="!HayÁrbol(i,j-1) &amp;&amp; !estaLoboFeroz(i,j-1) &amp;&amp; !hayDulces()" postConditions="PosiciónCaperucitaRoja(i,arbolImpactado.j+1)"/>
+  <Actions execute_by="//@Agent" executed_on="//@Environment" name="IrAlEste" preConditions="!HayÁrbol(i,j+1) &amp;&amp; !estaLoboFeroz(i,j+1) &amp;&amp; !hayDulces()" postConditions="PosiciónCaperucitaRoja(i,arbolImpactado.j-1))"/>
+  <Actions execute_by="//@Agent" executed_on="//@Environment" name="TomarDulcesIrNorte" preConditions="(hayDulces &amp;&amp; !estaLoboFeroz &amp;&amp; !hayArboles)" postConditions="cantidadDulcesObtenidos= cantidadDulcesObtenidos +cantidadDulcesLineaVista; posicionCaperucitaRoja()"/>
+  <Actions execute_by="//@Agent" executed_on="//@Environment" name="TomarDulcesIrSur" preConditions="(hayDulces &amp;&amp; !estaLoboFeroz &amp;&amp; !hayArboles)" postConditions="cantidadDulcesObtenidos= cantidadDulcesObtenidos +cantidadDulcesLineaVista; posicionCaperucitaRoja()"/>
+  <Actions execute_by="//@Agent" executed_on="//@Environment" name="TomarDulcesIrOeste" preConditions="(hayDulces &amp;&amp; !estaLoboFeroz &amp;&amp; !hayArboles)" postConditions="cantidadDulcesObtenidos= cantidadDulcesObtenidos +cantidadDulcesLineaVista; nuevaPosicionCaperucitaRoja"/>
+  <Actions execute_by="//@Agent" executed_on="//@Environment" name="TomarDulcesIrEste" preConditions="(hayDulces &amp;&amp; !estaLoboFeroz &amp;&amp; !hayArboles)" postConditions="cantidadDulcesObtenidos= cantidadDulcesObtenidos +cantidadDulcesLineaVista; posicionCaperucitaRoja()"/>
+  <Perceptions perceived_on="//@Environment" perceived_by="//@Agent" name="norte, sur, este, oeste" type="Other"/>
+  <Perceptions perceived_on="//@Environment" perceived_by="//@Agent" name="vidascaperucitaroja"/>
+  <Perceptions perceived_on="//@Environment" perceived_by="//@Agent" name="posicioncaperucitaroja" type="pair"/>
+</idemia:AgentModel>
