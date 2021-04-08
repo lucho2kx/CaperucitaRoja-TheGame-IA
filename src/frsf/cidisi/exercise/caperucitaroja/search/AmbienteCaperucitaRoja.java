@@ -1,7 +1,6 @@
 package frsf.cidisi.exercise.caperucitaroja.search;
 
 import frsf.cidisi.faia.agent.Action;
-import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
 
 public class AmbienteCaperucitaRoja extends Environment {
@@ -23,13 +22,28 @@ public class AmbienteCaperucitaRoja extends Environment {
      */
     @Override
     public  CaperucitaRojaPerception getPercept() {
-        // Create a new perception to return
-         CaperucitaRojaPerception perception = new CaperucitaRojaPerception();
+    	// Create a new perception to return
+    	CaperucitaRojaPerception perception = new CaperucitaRojaPerception();
 		
 		//TODO : Set the perceptions sensors
-        
-        // Return the perception
-        return perception;
+    	int[] posicionCaperucitaRoja= this.getEnvironmentState().getPosicionCaperucitaRoja();
+    	//int[] posicionLoboFeroz= this.getEnvironmentState().getposicionLoboFeroz();
+    	int[] norte= this.getEnvironmentState().getPuntoCardinal("norte");
+    	int[] sur= this.getEnvironmentState().getPuntoCardinal("sur");
+    	int[] este= this.getEnvironmentState().getPuntoCardinal("este");
+    	int[] oeste= this.getEnvironmentState().getPuntoCardinal("oeste");
+    	int cantVidas= this.getEnvironmentState().getvidasCaperucitaRoja();
+	     
+    	// Se asigna las percepciones, obtenidas del ambiente   
+    	perception.setposicioncaperucitaroja(posicionCaperucitaRoja);
+    	perception.setvidascaperucitaroja(cantVidas);
+    	perception.setNorte(norte);
+    	perception.setSur(sur);
+    	perception.setEste(este);
+    	perception.setOeste(oeste);
+	     
+	    // Return the perception
+	    return perception;
     }
 
     
@@ -37,15 +51,25 @@ public class AmbienteCaperucitaRoja extends Environment {
         return environmentState.toString();
     }
 
-    
+    // Este método indica bajo qué condición se considera que el agente ha fallado
     public boolean agentFailed(Action actionReturned) {
-
-        EstadoAmbiente envState =
+    	Boolean failed= false;
+    	
+        EstadoAmbiente estadoAmbiente =
                 this.getEnvironmentState();
 
         // TODO: Complete Method        
-
-        return false;
+        // 3 posibilidades inmediatas:
+        // 1- Agregar el estado del ambiente el atributo que nos indica falla(energía)
+        // 2- Agregar un operador que se denomine "apagar" (que vendrá en "actionReturned")
+        // 3- Modificar GoalBasedAgentSimulator para que pase el AgentState en lugar de Action
+        
+        int cantVidasCaperucitaRoja= estadoAmbiente.getvidasCaperucitaRoja();
+        if (cantVidasCaperucitaRoja <= 0) {
+        	failed= true;
+        }
+        
+        return failed;
     }
 
 	//TODO: Complete this section with agent-specific methods

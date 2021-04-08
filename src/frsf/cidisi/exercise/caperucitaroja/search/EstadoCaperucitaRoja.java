@@ -1,5 +1,7 @@
 package frsf.cidisi.exercise.caperucitaroja.search;
 
+import java.util.Arrays;
+
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 
@@ -43,8 +45,15 @@ public class EstadoCaperucitaRoja extends SearchBasedAgentState {
     public SearchBasedAgentState clone() {
         
 		//TODO: Complete Method
-		
-        return null;
+    	
+    	EstadoCaperucitaRoja nuevoEstadoCaperucitaRoja= new EstadoCaperucitaRoja();
+		nuevoEstadoCaperucitaRoja.setvidasCaperucitaRoja(this.vidasCaperucitaRoja);
+		nuevoEstadoCaperucitaRoja.setposicionCaperucitaRoja(this.posicionCaperucitaRoja);
+    	nuevoEstadoCaperucitaRoja.setcantidadDulcesObtenidos(this.cantidadDulcesObtenidos);
+    	nuevoEstadoCaperucitaRoja.setposicionLoboFeroz(this.posicionLoboFeroz);
+    	nuevoEstadoCaperucitaRoja.setmapa(this.mapa);
+    	
+        return nuevoEstadoCaperucitaRoja;
     }
 
     /**
@@ -55,6 +64,35 @@ public class EstadoCaperucitaRoja extends SearchBasedAgentState {
     public void updateState(Perception p) {
         
         //TODO: Complete Method
+    	CaperucitaRojaPerception percepcion= (CaperucitaRojaPerception)p;
+    	
+    	// En base a lo que percibe Caperucita Roja se actualizan los datos
+    	int[] norte= percepcion.getNorte();
+    	int[] sur= percepcion.getSur();
+    	int[] este= percepcion.getEste();
+    	int[] oeste= percepcion.getOeste();
+    	posicionCaperucitaRoja= percepcion.getposicioncaperucitaroja();
+    	//int[] posicionLoboFeroz
+    	posicionLoboFeroz= percepcion.getPosicionLoboFeroz();
+
+    	// Se actualiza el mapa con las percepciones que se reciben
+    	// Norte
+    	for (int i= 0; i < norte.length; i++) {
+    		mapa[posicionCaperucitaRoja[0]-i-1][posicionCaperucitaRoja[1]]= norte[i];
+    	}
+    	// Sur
+    	for (int i= 0; i < sur.length; i++) {
+    		mapa[posicionCaperucitaRoja[0]+i+1][posicionCaperucitaRoja[1]]= sur[i];
+    	}
+    	// Este
+    	for (int j= 0; j < este.length; j++) {
+    		mapa[posicionCaperucitaRoja[0]][posicionCaperucitaRoja[1]+j+1]= este[j];
+    	}
+    	// Oeste
+    	for (int j= 0; j < oeste.length; j++) {
+    		mapa[posicionCaperucitaRoja[0]][posicionCaperucitaRoja[1]-j-1]= oeste[j];
+    	}
+    	
     }
 
     /**
@@ -63,8 +101,9 @@ public class EstadoCaperucitaRoja extends SearchBasedAgentState {
     @Override
     public void initState() {
         
-	//TODO: Complete Method
-
+    	//TODO: Complete Method
+    	
+    	
     }
 
     /**
@@ -75,9 +114,33 @@ public class EstadoCaperucitaRoja extends SearchBasedAgentState {
         String str = "";
 
         //TODO: Complete Method
-
+        str= str + "Estado de Caperucita Roja:\n";
+        str= str + "Escenario percibido:\n";
+        str= str + this.showMapa()+"\n";
+        str= str + "Posición de Caperucita Roja: ("+ posicionCaperucitaRoja[0] +", "+ posicionCaperucitaRoja[1] +"\n";
+        str= str + "Posición del Lobo Feroz: ("+ posicionLoboFeroz[0] +", "+ posicionLoboFeroz[1] +"\n";
+        str= str + "Cantidad de vidas de Caperucita Roja = "+ vidasCaperucitaRoja +"\n";
+        
         return str;
     }
+    
+    private String showMapa() {
+		String str= new String();
+		for(int i= 0; i < 9; i++) {
+			str= str+"|";
+			for(int j= 0; j < 14; j++) {
+				if (j == 13) {
+					str= str + mapa[i][j];
+				}
+				else {
+					str= str + mapa[i][j] + " ";
+				}
+		    }
+            System.out.println("|");
+        }
+		
+		return str;
+	}
 
     /**
      * This method is used in the search process to verify if the node already
@@ -85,10 +148,31 @@ public class EstadoCaperucitaRoja extends SearchBasedAgentState {
      */
     @Override
     public boolean equals(Object obj) {
-       
+       Boolean equals= true;
        //TODO: Complete Method
+    	EstadoCaperucitaRoja estadoComparado= (EstadoCaperucitaRoja) obj;
+    	// Se comparan dos mapas y determinan si son iguales
+    	if (!Arrays.deepEquals(estadoComparado.getmapa(),this.mapa)) {
+    		equals= false;
+    	}
+    	// Se compara la posición de Caperucita Roja
+    	if (!Arrays.equals(estadoComparado.getposicionCaperucitaRoja(),this.posicionCaperucitaRoja)) {
+    		equals= false;
+    	}
+    	// Se compara la posición de Lobo Feroz
+    	if (!Arrays.equals(estadoComparado.getposicionLoboFeroz(),this.posicionLoboFeroz)) {
+    		equals= false;
+    	}
+    	// Se compara la cantidad de vidas de Caperucita Roja
+    	if (estadoComparado.getvidasCaperucitaRoja() != this.vidasCaperucitaRoja) {
+    		equals= false;
+    	}
+    	// Se compara la cantidad de dulces obtenidos por Caperucita Roja
+    	if (estadoComparado.getcantidadDulcesObtenidos() != this.cantidadDulcesObtenidos) {
+    		equals= false;
+    	}
         
-        return true;
+        return equals;
     }
 
     //TODO: Complete this section with agent-specific methods

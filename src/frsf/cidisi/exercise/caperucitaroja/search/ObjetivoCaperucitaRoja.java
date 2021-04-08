@@ -1,5 +1,3 @@
-
-
 package frsf.cidisi.exercise.caperucitaroja.search;
 
 import frsf.cidisi.faia.agent.search.GoalTest;
@@ -18,7 +16,7 @@ public class ObjetivoCaperucitaRoja extends GoalTest {
     	// Si Caperucita Roja está ubicada en el campo de flores y tiene más de una vida en el mapa,
     	// entonces Éxito.
     	// 4 = celda que contiene flores
-    	if ((mapa[posicionCaperucita[0]][posicionCaperucita[1]] == 4) 
+    	if ((mapa[posicionCaperucita[0]][posicionCaperucita[1]] == CaperucitaRojaPerception.FLORES_PERCEPTION) 
     			&& cantVida > 0){ 
             return true;
         }

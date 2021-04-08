@@ -32,15 +32,15 @@ public class CaperucitaRoja extends SearchBasedAgent {
 
         // Create the operators
         Vector<SearchAction> operators = new Vector<SearchAction>();
-        operators.addElement(new IrAlNorte());	
-        operators.addElement(new IrAlSur());	
-        operators.addElement(new IrAlOeste());	
-        operators.addElement(new IrAlEste());	
         operators.addElement(new TomarDulcesIrNorte());	
         operators.addElement(new TomarDulcesIrSur());	
         operators.addElement(new TomarDulcesIrOeste());	
         operators.addElement(new TomarDulcesIrEste());	
-
+        operators.addElement(new IrAlNorte());	
+        operators.addElement(new IrAlSur());	
+        operators.addElement(new IrAlOeste());	
+        operators.addElement(new IrAlEste());	
+        
         // Create the Problem which the agent will resolve
         Problem problem = new Problem(agGoal, agState, operators);
         this.setProblem(problem);
