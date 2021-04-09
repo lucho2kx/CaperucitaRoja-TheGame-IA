@@ -20,6 +20,9 @@ public class TomarDulcesIrNorte extends SearchAction {
         // PreConditions: (hayDulces && !estaLoboFeroz && !hayArboles)
         // PostConditions: cantidadDulcesObtenidos= cantidadDulcesObtenidos +cantidadDulcesLineaVista; posicionCaperucitaRoja()
         
+        
+        
+        
         return null;
     }
 

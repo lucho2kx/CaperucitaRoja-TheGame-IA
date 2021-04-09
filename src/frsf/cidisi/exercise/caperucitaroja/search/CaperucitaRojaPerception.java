@@ -14,9 +14,9 @@ public class CaperucitaRojaPerception extends Perception {
 	public static String ESTE= "este";
 	public static String OESTE= "oeste";
 	public static int VACIA_PERCEPTION = 0; 
-	public static int ARBOL_PERCEPTION = 1;
+	public static int DULCES_PERCEPTION = 1;
 	public static int LOBO_FEROZ_PERCEPTION = 2;
-	public static int DULCES_PERCEPTION = 3;
+	public static int ARBOL_PERCEPTION = 3;
 	public static int FLORES_PERCEPTION = 4;
 	
 	//TODO: Setup Sensors
