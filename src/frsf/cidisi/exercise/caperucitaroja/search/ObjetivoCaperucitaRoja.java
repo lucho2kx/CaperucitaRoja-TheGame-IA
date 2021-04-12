@@ -5,21 +5,22 @@ import frsf.cidisi.faia.state.AgentState;
 
 public class ObjetivoCaperucitaRoja extends GoalTest {
 
-    @Override
-    public boolean isGoalState (AgentState agentState) {
-    	// Se obtiene la posición de Caperucita Roja
-    	int[] posicionCaperucita= ((EstadoCaperucitaRoja)agentState).getposicionCaperucitaRoja();
-    	// Se obtiene la cantidad de vida de Caperucita Roja
-    	int cantVida= ((EstadoCaperucitaRoja)agentState).getvidasCaperucitaRoja();
-    	// Se obtiene el mapa 
-    	int[][] mapa= ((EstadoCaperucitaRoja)agentState).getmapa();
-    	// Si Caperucita Roja está ubicada en el campo de flores y tiene más de una vida en el mapa,
-    	// entonces Éxito.
-    	// 4 = celda que contiene flores
-    	if ((mapa[posicionCaperucita[0]][posicionCaperucita[1]] == CaperucitaRojaPerception.FLORES_PERCEPTION) 
-    			&& cantVida > 0){ 
-            return true;
-        }
-        return false;
-	}
+  @Override
+  public boolean isGoalState(AgentState agentState) {
+    // Se obtiene la posiciï¿½n de Caperucita Roja
+    int[] posicionCaperucita = ((EstadoCaperucitaRoja) agentState).getposicionCaperucitaRoja();
+    // Se obtiene la cantidad de vida de Caperucita Roja
+    int cantVida = ((EstadoCaperucitaRoja) agentState).getvidasCaperucitaRoja();
+    // Se obtiene el mapa
+    int[][] mapa = ((EstadoCaperucitaRoja) agentState).getmapa();
+    // Si Caperucita Roja estï¿½ ubicada en el campo de flores y tiene mï¿½s de una vida
+    // en el mapa,
+    // entonces ï¿½xito.
+    // 4 = celda que contiene flores
+    if ((mapa[posicionCaperucita[0]][posicionCaperucita[1]] == CaperucitaRojaPerception.FLORES_PERCEPTION)
+        && cantVida > 0) {
+      return true;
+    }
+    return false;
+  }
 }
