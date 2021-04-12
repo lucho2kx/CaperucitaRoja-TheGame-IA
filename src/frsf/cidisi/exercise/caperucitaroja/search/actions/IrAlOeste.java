@@ -8,58 +8,83 @@ import frsf.cidisi.faia.state.EnvironmentState;
 
 public class IrAlOeste extends SearchAction {
 
-    /**
-     * This method updates a tree node state when the search process is running.
-     * It does not updates the real world state.
-     */
-    @Override
-    public SearchBasedAgentState execute(SearchBasedAgentState s) {
-        EstadoCaperucitaRoja agState = (EstadoCaperucitaRoja) s;
-        
-        // TODO: Use this conditions
-        // PreConditions: !HayÁrbol(i,j-1) && !estaLoboFeroz(i,j-1) && !hayDulces()
-        // PostConditions: PosiciónCaperucitaRoja(i,arbolImpactado.j+1)
-        
-        return null;
-    }
+  /**
+   * This method updates a tree node state when the search process is running. It
+   * does not updates the real world state.
+   */
+  @Override
+  public SearchBasedAgentState execute(SearchBasedAgentState s) {
+    EstadoCaperucitaRoja agState = (EstadoCaperucitaRoja) s;
 
-    /**
-     * This method updates the agent state and the real world state.
-     */
-    @Override
-    public EnvironmentState execute(AgentState ast, EnvironmentState est) {
-        EstadoAmbiente environmentState = (EstadoAmbiente) est;
-        EstadoCaperucitaRoja agState = ((EstadoCaperucitaRoja) ast);
+    // TODO: Use this conditions
+    // PreConditions: !Hayï¿½rbol(i,j-1) && !estaLoboFeroz(i,j-1) && !hayDulces()
+    // PostConditions: Posiciï¿½nCaperucitaRoja(i,arbolImpactado.j+1)
 
-        // TODO: Use this conditions
-        // PreConditions: !HayÁrbol(i,j-1) && !estaLoboFeroz(i,j-1) && !hayDulces()
-        // PostConditions: PosiciónCaperucitaRoja(i,arbolImpactado.j+1)
-        
-        if (true) {
-            // Update the real world
-            
-            // Update the agent state
-            
-            return environmentState;
+    return null;
+  }
+
+  /**
+   * This method updates the agent state and the real world state.
+   */
+  @Override
+  public EnvironmentState execute(AgentState ast, EnvironmentState est) {
+    EstadoAmbiente estadoAmbiente = (EstadoAmbiente) est;
+    EstadoCaperucitaRoja estadoCaperucitaRoja = ((EstadoCaperucitaRoja) ast);
+
+    int[] posicionCaperucitaRoja = estadoCaperucitaRoja.getposicionCaperucitaRoja();
+    int[] posicionLoboFeroz = estadoCaperucitaRoja.getposicionLoboFeroz();
+    int[][] mapa = estadoCaperucitaRoja.getmapa();
+
+    // Si no hay ï¿½rbol en la celda superior
+    if (mapa[posicionCaperucitaRoja[0] - 1][posicionCaperucitaRoja[1]] != 3) {
+      Boolean estaLoboFeroz = false;
+      Boolean hayDulces = false;
+      int i = posicionCaperucitaRoja[0] - 1;
+      while ((i >= 0) && (mapa[i][posicionCaperucitaRoja[1]] != 3)) {
+        if ((posicionCaperucitaRoja[1] == posicionLoboFeroz[1]) && (i == posicionLoboFeroz[0])) {
+          // Lobo Feroz se encuentra en la direcciï¿½n norte
+          estaLoboFeroz = true;
         }
+        if (mapa[i][posicionCaperucitaRoja[1]] == 1) {
+          // Hay dulces en la direcciï¿½n norte
+          hayDulces = true;
+        }
+        i--;
+      }
+      // Si no estï¿½ el Lobo Feroz y no hay dulces en la direcciï¿½n del norte
+      // entonces se puede avanzar al norte
+      if (!estaLoboFeroz && !hayDulces) {
+        // Caperucita Roja avanza hasta la celda vacï¿½a anterior a ï¿½rbol
+        posicionCaperucitaRoja[0] = i;
+      }
 
-        return null;
+      if (!estaLoboFeroz && !hayDulces) {
+        // Update the real world
+        estadoAmbiente.setPosicionCaperucitaRoja(posicionCaperucitaRoja);
+
+        // Update the agent state
+        estadoCaperucitaRoja.setposicionCaperucitaRoja(posicionCaperucitaRoja);
+
+      }
     }
 
-    /**
-     * This method returns the action cost.
-     */
-    @Override
-    public Double getCost() {
-        return new Double(0);
-    }
+    return estadoAmbiente;
+  }
 
-    /**
-     * This method is not important for a search based agent, but is essensial
-     * when creating a calculus based one.
-     */
-    @Override
-    public String toString() {
-        return "IrAlOeste";
-    }
+  /**
+   * This method returns the action cost.
+   */
+  @Override
+  public Double getCost() {
+    return new Double(0);
+  }
+
+  /**
+   * This method is not important for a search based agent, but is essensial when
+   * creating a calculus based one.
+   */
+  @Override
+  public String toString() {
+    return "IrAlOeste";
+  }
 }
